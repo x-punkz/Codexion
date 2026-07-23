@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time_log.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daniviei <daniviei@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/23 17:08:57 by daniviei          #+#    #+#             */
-/*   Updated: 2026/07/23 17:09:02 by daniviei         ###   ########.fr       */
+/*   Created: 2026/07/23 17:57:26 by daniviei          #+#    #+#             */
+/*   Updated: 2026/07/23 17:57:27 by daniviei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	main(int argc, char **argv)
+/*Relogio absoluto em milisegundos (gettimeofday).*/
+long	now_milisec(void)
 {
-	t_simu	simu;
-
-	if (argc == 9)
+	struct timeval	tv;
 	{
-		printf("retorno do parser: %d\n", parser(&simu, argv));
-	}
-	else
-		write(2, "Pass the 8 arguments\n", 22);
-	printf("\n");
+		gettimeofday(&tv, NULL);
+		return ((long)tv.tv_sec * 1000 + tv.tv_sec / 1000);
+	};
+	
 }

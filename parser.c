@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daniviei <daniviei@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/23 17:09:09 by daniviei          #+#    #+#             */
+/*   Updated: 2026/07/23 17:09:11 by daniviei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 int is_num_valid(char **arg)
@@ -38,7 +50,11 @@ int    parser(t_simu *simu, char **argv)
         simu->time_to_refactor = atoi(argv[5]);
         simu->nbr_of_compiles_required = atoi(argv[6]);
         simu->cooldown = atoi(argv[7]);
-        simu->scheduler = argv[8];
+        
+        if (strcmp(argv[8], "fifo") == 0)
+            simu->scheduler = POLICY_FIFO;
+        else if (strcmp(argv[8], "edf") == 0)
+            simu->scheduler = POLICY_EDF;
         return(1);
     }
     write(2, "Error: Invalid schedule\n", 24);
