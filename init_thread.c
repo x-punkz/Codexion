@@ -12,11 +12,12 @@
 
 #include "codexion.h"
 
-int	init_dongles(t_simu *simu)
+static int	init_dongles(t_simu *simu)
 {
 	int	i;
 
-	if (!(simu->dongles = malloc(sizeof(t_dongle) * simu->nbr_of_coders)));
+	simu->dongles = malloc(sizeof(t_dongle) * simu->nbr_of_coders);
+	if (!simu->dongles)
 		return (0);
 	memset(simu->dongles, 0, sizeof(t_dongle) * simu->nbr_of_coders);
 	i = -1;
@@ -34,7 +35,26 @@ int	init_dongles(t_simu *simu)
 	return (1);
 }
 
-int	init_coders()
+static int	init_coders(t_simu *simu)
+{
+	int	i;
+
+	simu->coders = malloc(sizeof(t_coder) * simu->nbr_of_coders);
+	if (!simu->coders)
+		return (0);
+	memset(simu->coders, 0, sizeof(t_coder) *simu->nbr_of_coders);
+	i = -1;
+	while (++i < simu->nbr_of_coders)
+	{
+		simu->coders[i].id = i + 1;
+		simu->coders[i].left = i;
+		simu->coders[i].right = (i + 1) % simu->nbr_of_coders;
+		simu->coders[i].last_copile_start = simu->start_time;
+		simu->coders[i].simu = simu;
+		pthread_mutex_init(&simu->coders[i].lock, NULL);
+	}
+	return (1);
+}
 
 /* Iniciando a o mutex da simulaçao*/
 int	init_simu(t_simu *simu)
@@ -50,4 +70,17 @@ int	init_simu(t_simu *simu)
 	if (!init_coders(simu))
 		return (0);
 	return (1);
+}
+
+int	run_simu(t_simu *simu)
+{
+	int	i;
+
+	i = -1;
+	while (++i < simu->nbr_of_coders)
+	{
+		if (pthread_create(&simu->coders[i].thread_id, NULL, coder_routine, &simu->coders[i]))
+			return (0);
+	}
+	if (pthread_create())
 }
