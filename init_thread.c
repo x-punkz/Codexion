@@ -79,8 +79,49 @@ int	run_simu(t_simu *simu)
 	i = -1;
 	while (++i < simu->nbr_of_coders)
 	{
-		if (pthread_create(&simu->coders[i].thread_id, NULL, coder_routine, &simu->coders[i]))
+		if (pthread_create(&simu->coders[i].thread_id,
+			NULL, coder_routine,
+			&simu->coders[i])
+		)
 			return (0);
 	}
-	if (pthread_create())
+	if (pthread_create(&simu->monitor,
+		NULL,
+		monitor_routine,
+		simu)
+	)
+		return (0);
+	i = -1;
+	while (++i < simu->nbr_of_coders)
+		pthread_join(simu->coders[i].thread_id, NULL);
+	pthread_join(simu->monitor, NULL);
+	return (1);	
+}
+
+void	destroy_simu(t_simu *simu)
+{
+	int	i;
+
+	i = -1;
+	if (simu->dongles)
+	{
+		while (++i < simu->nbr_of_coders)
+		{
+			pthread_mutex_destroy(&simu->dongles[i].occuped);
+			pthread_cond_destroy(&simu->dongles[i].free);
+			pq_free(&simu->dongles[i].waiters);
+		}
+	}
+	i = -1;
+	if (simu->coders)
+	{
+		while(++i < simu->nbr_of_coders)
+			pthread_mutex_destroy(&simu->coders[i].lock);
+		pthread_mutex_destroy(&simu->log_lock);
+		pthread_mutex_destroy(&simu->state_lock);
+		pthread_mutex_destroy(&simu->seq_lock);
+		free(simu->dongles);
+		free(simu->coders);
+		
+	}
 }
