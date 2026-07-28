@@ -84,4 +84,8 @@ int		parser(t_simu *simu, char **argv);
 /******** time / log ********/
 long	milisec(void);
 
+/*** init / run / destroy ***/
+int		init_simu(t_simu *simu);
+int		run_simu(t_simu *simu);
+void	destroy_simu(t_simu *simu);
 #endif

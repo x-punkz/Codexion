@@ -18,7 +18,15 @@ int	main(int argc, char **argv)
 
 	if (argc == 9)
 	{
-		printf("retorno do parser: %d\n", parser(&simu, argv));
+		if (!parser(&simu, argv))
+			return (1);
+		if (!init_simu(&simu))
+		{
+			destroy_simu(&simu);
+			return (1);
+		}
+		run_simu(&simu);
+		destroy_simu(&simu);
 	}
 	else
 		write(2, "Pass the 8 arguments\n", 22);

@@ -12,7 +12,7 @@
 
 #include "codexion.h"
 
-int is_num_valid(char **arg)
+static int is_num_valid(char **arg)
 {
     int i;
     int j;
