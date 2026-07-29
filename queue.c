@@ -45,3 +45,14 @@ int	pq_peek(t_queue *pq, t_request *out)
 	*out = pq->data[0];
 	return (1);
 }
+
+int	pq_pop(t_queue * pq, t_request *out)
+{
+	if (pq->size == 0)
+		return (0);
+	*out = pq->data[0];
+	pq->size--;
+	pq->data[0] = pq->data[pq->size];
+	shift_down(pq, 0);
+	return (1);
+}

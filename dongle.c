@@ -12,7 +12,7 @@
 
 #include "codexion.h"
 
-int	take_dongles(t_coder *coder, t_dongle *dongle)
+int	take_dongle(t_coder *coder, t_dongle *dongle)
 {
 	t_request	req;
 
@@ -21,4 +21,14 @@ int	take_dongles(t_coder *coder, t_dongle *dongle)
 	pq_push(&dongle->waiters, req);
 	while (!is_stopped(coder->simu) && !can_take(dongle, coder))
 		wait_turn(dongle, coder);
+	if (is_stopped(coder->simu))
+	{
+		pthread_mutex_unlock(&dongle->occuped);
+		return (0);
+	}
+	pq_pop(&dongle->waiters, &req);
+	dongle->held = 1;
+	pthread_mutex_unlock(&dongle->occuped);
+	log_state(coder, "has taken a dongle");
+	return (1);
 }

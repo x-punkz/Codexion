@@ -40,4 +40,10 @@ void	*coder_routine(void *arg)
 		lone_coder(coder);
 		return (NULL);
 	}
+	while (!is_stopped(coder->simu))
+	{
+		if (!compile_cycle(coder, lower_id, high_id))
+			break;
+	}
+	return (NULL);
 }

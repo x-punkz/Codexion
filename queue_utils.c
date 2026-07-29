@@ -45,3 +45,28 @@ void	shift_up(t_queue *pq, int i)
 			i = parent;
 	}
 }
+
+void	shift_down(t_queue *pq, int i)
+{
+	int			best;
+	int			child;
+	t_request	tmp;
+
+	best = i;
+	child = 2 * i + 1;
+	while (child < pq->size)
+	{
+		if (req_before(pq->data[child], pq->data[best], pq->sched))
+			best = child;
+		if (child + 1 < pq->size
+			&& req_before(pq->data[child + 1], pq->data[best], pq->sched))
+			best = child + 1;
+		if (best == i)
+			break;
+		tmp = pq->data[i];
+		pq->data[i] = pq->data[best];
+		pq->data[best] = tmp;
+		i = best;
+		child = 2 * i + 1;
+	}
+}

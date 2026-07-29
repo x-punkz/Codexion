@@ -88,4 +88,11 @@ long	now_milisec(void);
 int		init_simu(t_simu *simu);
 int		run_simu(t_simu *simu);
 void	destroy_simu(t_simu *simu);
+
+/******** threads ***********/
+void	*coder_routine(void *arg);
+void	*monitor_routine(void *arg);
+
+/******** dongles ***********/
+
 #endif

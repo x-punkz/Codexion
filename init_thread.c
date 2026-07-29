@@ -49,7 +49,7 @@ static int	init_coders(t_simu *simu)
 		simu->coders[i].id = i + 1;
 		simu->coders[i].left = i;
 		simu->coders[i].right = (i + 1) % simu->nbr_of_coders;
-		simu->coders[i].last_copile_start = simu->start_time;
+		simu->coders[i].last_compile_start = simu->start_time;
 		simu->coders[i].simu = simu;
 		pthread_mutex_init(&simu->coders[i].lock, NULL);
 	}
