@@ -23,7 +23,7 @@ int	req_before(t_request a, t_request b, t_sched sched)
 	{
 		if (a.deadline != b.deadline)
 			return (a.deadline < b.deadline);
-		return (a.seq < b.seq);
+		return (a.seq < b.seq); /*apagar por ser redundante, testar no final*/
 	}
 	return (a.seq < b.seq);
 }
@@ -34,5 +34,14 @@ void	shift_up(t_queue *pq, int i)
 	int			parent;
 	t_request	tmp;
 
-	while ()
+	while (i > 0)
+	{
+		parent = (i - 1) / 2;
+		if (!req_before(pq->data[i], pq->data[parent], pq->sched))
+			break;
+			tmp = pq->data[parent];
+			pq->data[parent] = pq->data[i];
+			pq->data[i] = tmp;
+			i = parent;
+	}
 }

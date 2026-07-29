@@ -82,7 +82,7 @@ struct	s_simu
 int		parser(t_simu *simu, char **argv);
 
 /******** time / log ********/
-long	milisec(void);
+long	now_milisec(void);
 
 /*** init / run / destroy ***/
 int		init_simu(t_simu *simu);

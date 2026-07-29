@@ -36,3 +36,12 @@ int	pq_push(t_queue *pq, t_request req)
 	shift_up(pq, pq->size - 1);
 	return (1);
 }
+
+/* Espia o topo sem remover. 0 = fila vazia. */
+int	pq_peek(t_queue *pq, t_request *out)
+{
+	if (pq->size == 0)
+		return (0);
+	*out = pq->data[0];
+	return (1);
+}

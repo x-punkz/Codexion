@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dongles.c                                          :+:      :+:    :+:   */
+/*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daniviei <daniviei@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/28 20:36:31 by daniviei          #+#    #+#             */
-/*   Updated: 2026/07/28 20:36:32 by daniviei         ###   ########.fr       */
+/*   Created: 2026/07/29 15:09:30 by daniviei          #+#    #+#             */
+/*   Updated: 2026/07/29 15:09:44 by daniviei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	take_dongles(t_coder *coder, t_dongle *dongle)
+/* Le a flag de parada de forma thread-safe. */
+int	is_stopped(t_simu *simu)
 {
-	t_request	req;
+	int	safe_return;
 
-	make_request(coder, &req);
-	pthread_mutex_lock(&dongle->occuped);
-	pq_push(&dongle->waiters, req);
-	while (!is_stopped(coder->simu) && !can_take(dongle, coder))
-		wait_turn(dongle, coder);
+	pthread_mutex_lock(&simu->state_lock);
+	safe_return = simu->stopped;
+	pthread_mutex_unlock(&simu->state_lock);
+	return (safe_return);
 }
