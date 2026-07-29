@@ -46,7 +46,7 @@ typedef struct	s_coder
 {
 	int				id;
 	int				nbr_of_copiles_done;
-	int 			last_copile_start;
+	int 			last_compile_start;
 	int				left;
 	int				right;
 	t_simu			*simu;

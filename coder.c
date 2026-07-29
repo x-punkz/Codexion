@@ -12,6 +12,11 @@
 
 #include "codexion.h"
 
+static void	lone_coder(t_coder *coder)
+{
+	take_dongle(coder, &coder->simu->dongles[0]);
+	take_dongle(coder, &coder->simu->dongles[0]);
+}
 /*
 ** Thread do coder. Ordena os dois dongles por id (menor primeiro) para
 ** quebrar a espera circular de Coffman => sem deadlock.
