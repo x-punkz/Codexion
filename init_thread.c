@@ -26,7 +26,8 @@ static int	init_dongles(t_simu *simu)
 		simu->dongles[i].id = i;
 		simu->dongles[i].available_at = 0;
 		pthread_mutex_init(&simu->dongles[i].occuped, NULL);
-		pthread_cond_init(&simu->dongles[i].free, NULL);
+		if (pthread_cond_init(&simu->dongles[i].free, NULL))
+			return (1);
 		if (!pq_init(&simu->dongles[i].waiters,
 				simu->nbr_of_coders,
 				simu->scheduler))

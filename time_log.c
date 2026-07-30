@@ -17,10 +17,8 @@ long	now_milisec(void)
 {
 	struct timeval	tv;
 
-	{
-		gettimeofday(&tv, NULL);
-		return ((long)tv.tv_sec * 1000 + tv.tv_sec / 1000);
-	};
+	gettimeofday(&tv, NULL);
+	return ((long)tv.tv_sec * 1000 + tv.tv_sec / 1000);
 }
 
 /*Milisegundos decorridos desde o inicip da simulaçao. */

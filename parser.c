@@ -42,13 +42,13 @@ int	parser(t_simu *simu, char **argv)
 		&& (!strcmp(argv[8], "fifo")
 			|| !strcmp(argv[8], "edf")))
 	{
-		simu->nbr_of_coders = atoi(argv[1]);
-		simu->time_to_burnout = atoi(argv[2]);
-		simu->time_to_compile = atoi(argv[3]);
-		simu->time_to_debug = atoi(argv[4]);
-		simu->time_to_refactor = atoi(argv[5]);
+		simu->nbr_of_coders = (long)atoi(argv[1]);
+		simu->time_to_burnout = (long)atoi(argv[2]);
+		simu->time_to_compile = (long)atoi(argv[3]);
+		simu->time_to_debug = (long)atoi(argv[4]);
+		simu->time_to_refactor = (long)atoi(argv[5]);
 		simu->nbr_of_compiles_required = atoi(argv[6]);
-		simu->cooldown = atoi(argv[7]);
+		simu->cooldown = (long)atoi(argv[7]);
 		if (strcmp(argv[8], "fifo") == 0)
 			simu->scheduler = POLICY_FIFO;
 		else if (strcmp(argv[8], "edf") == 0)

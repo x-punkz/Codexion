@@ -29,6 +29,9 @@ int	main(int argc, char **argv)
 		destroy_simu(&simu);
 	}
 	else
+	{
 		write(2, "Pass the 8 arguments\n", 22);
+		return (1);
+	}
 	printf("\n");
 }

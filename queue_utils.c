@@ -23,7 +23,6 @@ int	req_before(t_request a, t_request b, t_sched sched)
 	{
 		if (a.deadline != b.deadline)
 			return (a.deadline < b.deadline);
-		return (a.seq < b.seq); /*apagar por ser redundante, testar no final*/
 	}
 	return (a.seq < b.seq);
 }
