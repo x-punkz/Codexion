@@ -46,7 +46,7 @@ int	pq_peek(t_queue *pq, t_request *out)
 	return (1);
 }
 
-int	pq_pop(t_queue * pq, t_request *out)
+int	pq_pop(t_queue *pq, t_request *out)
 {
 	if (pq->size == 0)
 		return (0);

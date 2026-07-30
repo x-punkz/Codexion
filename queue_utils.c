@@ -38,7 +38,7 @@ void	shift_up(t_queue *pq, int i)
 	{
 		parent = (i - 1) / 2;
 		if (!req_before(pq->data[i], pq->data[parent], pq->sched))
-			break;
+			break ;
 		tmp = pq->data[parent];
 		pq->data[parent] = pq->data[i];
 		pq->data[i] = tmp;
@@ -62,7 +62,7 @@ void	shift_down(t_queue *pq, int i)
 			&& req_before(pq->data[child + 1], pq->data[best], pq->sched))
 			best = child + 1;
 		if (best == i)
-			break;
+			break ;
 		tmp = pq->data[i];
 		pq->data[i] = pq->data[best];
 		pq->data[best] = tmp;

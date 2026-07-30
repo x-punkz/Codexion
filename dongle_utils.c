@@ -32,6 +32,7 @@ void	make_request(t_coder *coder, t_request *req)
 int	can_take(t_dongle *dongle, t_coder *coder)
 {
 	t_request	top;
+
 	if (dongle->held || now_milisec() < dongle->available_at)
 		return (0);
 	if (!pq_peek(&dongle->waiters, &top))
@@ -46,7 +47,9 @@ void	wait_turn(t_dongle *dongle, t_coder *coder)
 	struct timespec	time_spec;
 	t_request		top;
 
-	if (!dongle->held && pq_peek(&dongle->waiters, &top) && top.coder_id == coder->id)
+	if (!dongle->held
+		&& pq_peek(&dongle->waiters, &top)
+		&& top.coder_id == coder->id)
 	{
 		time_spec.tv_sec = dongle->available_at / 1000;
 		time_spec.tv_nsec = (dongle->available_at % 1000) * 1000000;

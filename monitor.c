@@ -30,7 +30,7 @@ static void	declare_burnout(t_coder *coder)
 	pthread_mutex_lock(&coder->simu->log_lock);
 	if (!is_stopped(coder->simu))
 	{
-		write_line(coder, "burned out");
+		write_line(coder, "\033[31mburned out\033[0m");
 		set_stopped(coder->simu);
 	}
 	pthread_mutex_unlock(&coder->simu->log_lock);
@@ -48,7 +48,6 @@ static void	wake_all_dongles(t_simu *simu)
 		pthread_cond_broadcast(&simu->dongles[i].free);
 		pthread_mutex_unlock(&simu->dongles[i].occuped);
 	}
-	
 }
 
 /* 1 se todos ja compilaram o numero exigido de vezes.*/

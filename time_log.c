@@ -16,11 +16,11 @@
 long	now_milisec(void)
 {
 	struct timeval	tv;
+
 	{
 		gettimeofday(&tv, NULL);
 		return ((long)tv.tv_sec * 1000 + tv.tv_sec / 1000);
 	};
-	
 }
 
 /*Milisegundos decorridos desde o inicip da simulaçao. */
@@ -52,6 +52,7 @@ static int	put_ulong(char *buf, long n)
 	}
 	return (len);
 }
+
 /* Emite "timestamp id msg" numa unica sequencia de write() (saida imediata
 e atomica). NAO trava nada: quem chama garante a serializacao.*/
 void	write_line(t_coder *coder, const char *msg)

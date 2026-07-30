@@ -33,14 +33,15 @@ static void	lone_coder(t_coder *coder)
 	take_dongle(coder, &coder->simu->dongles[0]);
 }
 
-/* Reinicia o relogio de burnout, conta a compilacao e cumpre time_to_compile. */
+/* Reinicia o relogio de burnout, conta a compilacao e
+cumpre time_to_compile. */
 static void	do_compile(t_coder *coder)
 {
 	pthread_mutex_lock(&coder->lock);
 	coder->last_compile_start = now_milisec();
 	coder->compiles++;
 	pthread_mutex_unlock(&coder->lock);
-	log_state(coder, "is compiling");
+	log_state(coder, "\033[32mis compiling\033[0m");
 	precise_sleep(coder->simu->time_to_compile, coder->simu);
 }
 
@@ -48,7 +49,7 @@ static void	do_compile(t_coder *coder)
 static int	compile_cycle(t_coder *coder, int lower_id, int high_id)
 {
 	if (!take_dongle(coder, &coder->simu->dongles[lower_id]))
-	return (0);
+		return (0);
 	if (!take_dongle(coder, &coder->simu->dongles[high_id]))
 	{
 		release_dongle(coder, &coder->simu->dongles[lower_id]);
@@ -57,9 +58,9 @@ static int	compile_cycle(t_coder *coder, int lower_id, int high_id)
 	do_compile(coder);
 	release_dongle(coder, &coder->simu->dongles[lower_id]);
 	release_dongle(coder, &coder->simu->dongles[high_id]);
-	log_state(coder, "is debugging");
+	log_state(coder, "\033[33mis debugging\033[0m");
 	precise_sleep(coder->simu->time_to_debug, coder->simu);
-	log_state(coder, "is refactoring");
+	log_state(coder, "\033[1;33mis refactoring\033[0m");
 	precise_sleep(coder->simu->time_to_refactor, coder->simu);
 	return (1);
 }
@@ -90,7 +91,7 @@ void	*coder_routine(void *arg)
 	while (!is_stopped(coder->simu))
 	{
 		if (!compile_cycle(coder, lower_id, high_id))
-			break;
+			break ;
 	}
 	return (NULL);
 }
