@@ -39,10 +39,10 @@ void	shift_up(t_queue *pq, int i)
 		parent = (i - 1) / 2;
 		if (!req_before(pq->data[i], pq->data[parent], pq->sched))
 			break;
-			tmp = pq->data[parent];
-			pq->data[parent] = pq->data[i];
-			pq->data[i] = tmp;
-			i = parent;
+		tmp = pq->data[parent];
+		pq->data[parent] = pq->data[i];
+		pq->data[i] = tmp;
+		i = parent;
 	}
 }
 

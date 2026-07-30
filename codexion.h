@@ -35,7 +35,7 @@ typedef struct	s_dongle
 	int				id;
 	pthread_mutex_t	occuped;
 	pthread_cond_t	free;
-	long			avaiable_at;
+	long			available_at;
 	int				held;
 	t_queue			waiters;
 }	t_dongle;
@@ -84,8 +84,9 @@ int		parser(t_simu *simu, char **argv);
 
 /******** time / log ********/
 long	now_milisec(void);
-long	elapsed_ms(t_simu *simu);
+long	elapsed_milisec(t_simu *simu);
 void	write_line(t_coder *coder, const char *msg);
+void	log_state(t_coder *coder, const char *msg);
 
 /*** init / run / destroy ***/
 int		init_simu(t_simu *simu);
@@ -97,8 +98,8 @@ void	*coder_routine(void *arg);
 void	*monitor_routine(void *arg);
 
 /******** dongles ***********/
-int	take_dongle(t_coder *coder, t_dongle *dongle);
-//void	release_dongle(t_coder *c, t_dongle *d);
+int		take_dongle(t_coder *coder, t_dongle *dongle);
+void	release_dongle(t_coder *c, t_dongle *d);
 void	make_request(t_coder *c, t_request *req);
 int		can_take(t_dongle *d, t_coder *c);
 void	wait_turn(t_dongle *d, t_coder *c);

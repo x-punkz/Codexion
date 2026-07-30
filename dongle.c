@@ -32,3 +32,16 @@ int	take_dongle(t_coder *coder, t_dongle *dongle)
 	log_state(coder, "has taken a dongle");
 	return (1);
 }
+
+/*
+** Libera o dongle e inicia o cooldown. O broadcast (feito com o lock em maos)
+** acorda os que esperam sem risco de lost-wakeup.
+*/
+void	release_dongle(t_coder *coder, t_dongle *dongle)
+{
+	pthread_mutex_lock(&dongle->occuped);
+	dongle->held = 0;
+	dongle->available_at = now_milisec() + coder->simu->cooldown;
+	pthread_cond_broadcast(&dongle->free);
+	pthread_mutex_unlock(&dongle->occuped);
+}

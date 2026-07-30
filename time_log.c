@@ -67,3 +67,15 @@ void	write_line(t_coder *coder, const char *msg)
 	write(1, msg, strlen(msg));
 	write(1, "\n", 1);
 }
+
+/*
+** Log de mudanca de estado de um coder. Serializado por log_lock e suprimido
+** apos a parada, para que nenhuma mensagem apareca depois do "burned out".
+*/
+void	log_state(t_coder *coder, const char *msg)
+{
+	pthread_mutex_lock(&coder->simu->log_lock);
+	if (!is_stopped(coder->simu))
+		write_line(coder, msg);
+	pthread_mutex_unlock(&coder->simu->log_lock);
+}
