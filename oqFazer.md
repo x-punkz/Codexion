@@ -1,3 +1,6 @@
+# teste p rodar
+./a.out 5 800 200 200 200 3 100 fifo
+
 # Guia de início — Projeto Codexion (42)
 
 > Nota importante: lendo o PDF do enunciado inteiro, **não existe uma seção de bonus definida** para este projeto (ela aparece apenas nas "Common Instructions" como regra genérica de todos os projetos da 42, mas o Chapter VI — Mandatory part — não define nenhum bonus específico do Codexion). Então, a não ser que a plataforma de correção (intra/Deepthought) mostre um bonus separadamente, trate este projeto como **apenas mandatory part**.

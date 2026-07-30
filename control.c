@@ -22,3 +22,11 @@ int	is_stopped(t_simu *simu)
 	pthread_mutex_unlock(&simu->state_lock);
 	return (safe_return);
 }
+
+/*Sinaliza que a simulacao acabou (burnout ou todos compilaram o bastante)*/
+void	set_stopped(t_simu *simu)
+{
+	pthread_mutex_lock(&simu->state_lock);
+	simu->stopped = 1;
+	pthread_mutex_unlock(&simu->state_lock);
+}

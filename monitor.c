@@ -31,8 +31,44 @@ static void	declare_burnout(t_coder *coder)
 	if (!is_stopped(coder->simu))
 	{
 		write_line(coder, "burned out");
+		set_stopped(coder->simu);
 	}
+	pthread_mutex_unlock(&coder->simu->log_lock);
 }
+
+/*Acorda todos os que esperam por dongles, para que possam sair na parada.*/
+static void	wake_all_dongles(t_simu *simu)
+{
+	int	i;
+
+	i = -1;
+	while (++i < simu->nbr_of_coders)
+	{
+		pthread_mutex_lock(&simu->dongles[i].occuped);
+		pthread_cond_broadcast(&simu->dongles[i].free);
+		pthread_mutex_unlock(&simu->dongles[i].occuped);
+	}
+	
+}
+
+/* 1 se todos ja compilaram o numero exigido de vezes.*/
+static int	all_done(t_simu *simu)
+{
+	int	i;
+	int	done;
+
+	i = -1;
+	while (++i < simu->nbr_of_coders)
+	{
+		pthread_mutex_lock(&simu->coders[i].lock);
+		done = (simu->coders[i].compiles >= simu->nbr_of_compiles_required);
+		pthread_mutex_unlock(&simu->coders[i].lock);
+		if (!done)
+			return (0);
+	}
+	return (1);
+}
+
 /* Thread monitora: varre os coders detectando burnout (< 10ms) e checa a
  condicao de termino. Ao parar, acorda quem estiver esperando por dongles.*/
 void	*monitor_routine(void *arg)
@@ -46,11 +82,17 @@ void	*monitor_routine(void *arg)
 		i = -1;
 		while (++i < simu->nbr_of_coders)
 		{
-			if (check_burnout(&simu->coders))
+			if (check_burnout(&simu->coders[i]))
 			{
 				declare_burnout(&simu->coders[i]);
-
+				wake_all_dongles(simu);
+				return (NULL);
 			}
 		}
+		if (all_done(simu))
+			set_stopped(simu);
+		usleep(300);
 	}
+	wake_all_dongles(simu);
+	return (NULL);
 }

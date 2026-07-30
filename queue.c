@@ -56,3 +56,11 @@ int	pq_pop(t_queue * pq, t_request *out)
 	shift_down(pq, 0);
 	return (1);
 }
+
+void	pq_free(t_queue *pq)
+{
+	free(pq->data);
+	pq->data = NULL;
+	pq->size = 0;
+	pq->capacity = 0;
+}
