@@ -22,11 +22,16 @@ static int	is_num_valid(char **arg)
 	while (i <= 7)
 	{
 		j = 0;
+		if (!arg[i][0])
+		{
+			write(2, "Error: Invalid argument\n", 25);
+			return (0);
+		}
 		while (arg[i][j])
 		{
-			if (!isdigit(arg[i][j]))
+			if (arg[i][j] < '0' || arg[i][j] > '9')
 			{
-				write(2, "arg isn't a valid number\n", 25);
+				write(2, "Error: arg isn't a valid number\n", 32);
 				return (0);
 			}
 			j++;
@@ -43,6 +48,11 @@ int	parser(t_simu *simu, char **argv)
 			|| !strcmp(argv[8], "edf")))
 	{
 		simu->nbr_of_coders = (long)atoi(argv[1]);
+		if (simu->nbr_of_coders < 1)
+		{
+			write(2, "Error: number_of_coders must be >= 1\n", 38);
+			return (0);
+		}
 		simu->time_to_burnout = (long)atoi(argv[2]);
 		simu->time_to_compile = (long)atoi(argv[3]);
 		simu->time_to_debug = (long)atoi(argv[4]);
@@ -55,6 +65,5 @@ int	parser(t_simu *simu, char **argv)
 			simu->scheduler = POLICY_EDF;
 		return (1);
 	}
-	write(2, "Error: Invalid schedule\n", 24);
-	return (3);
+	return (0);
 }

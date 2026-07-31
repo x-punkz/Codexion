@@ -7,7 +7,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/time.h>
-#include <ctype.h>
 
 typedef enum	e_schedule
 {

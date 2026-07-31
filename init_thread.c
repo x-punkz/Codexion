@@ -112,16 +112,16 @@ void	destroy_simu(t_simu *simu)
 			pthread_cond_destroy(&simu->dongles[i].free);
 			pq_free(&simu->dongles[i].waiters);
 		}
+		free(simu->dongles);
 	}
 	i = -1;
 	if (simu->coders)
 	{
 		while (++i < simu->nbr_of_coders)
 			pthread_mutex_destroy(&simu->coders[i].lock);
-		pthread_mutex_destroy(&simu->log_lock);
-		pthread_mutex_destroy(&simu->state_lock);
-		pthread_mutex_destroy(&simu->seq_lock);
-		free(simu->dongles);
 		free(simu->coders);
 	}
+	pthread_mutex_destroy(&simu->log_lock);
+	pthread_mutex_destroy(&simu->state_lock);
+	pthread_mutex_destroy(&simu->seq_lock);
 }
