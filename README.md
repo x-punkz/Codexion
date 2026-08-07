@@ -149,6 +149,8 @@ everywhere, so the synchronization layer itself cannot deadlock.
 
 ## Resources
 
+- The best site for learn threads:
+    https://www-codequoi-com.translate.goog/en/threads-mutexes-and-concurrent-programming-in-c/?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt&_x_tr_pto=tc
 - Dijkstra, E. W. — *Hierarchical ordering of sequential processes* (the origin
   of the Dining Philosophers problem and the resource-hierarchy solution).
 - Coffman, Elphick, Shoshani — *System Deadlocks* (the four deadlock conditions).
